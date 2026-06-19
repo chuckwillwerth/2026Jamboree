@@ -38,6 +38,12 @@ input {
   font: inherit;
 }
 
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
 .app-shell {
   width: min(1100px, calc(100vw - 24px));
   margin: 0 auto;
@@ -316,11 +322,18 @@ input {
   background: var(--brand);
   color: white;
   font-weight: 700;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.checkin-button:active {
+  transform: scale(0.96);
+  opacity: 0.85;
 }
 
 .roster-card[data-present="true"] .checkin-button {
-  background: #e8f2ef;
-  color: var(--brand-strong);
+  background: var(--warning-soft);
+  color: var(--warning);
+  border: 1.5px solid rgba(182, 90, 27, 0.22);
 }
 
 .empty-state {
@@ -378,8 +391,64 @@ input {
     padding: 14px;
   }
 
-  .stats,
+  /* Keep stats 3-column; only collapse person-details */
   .person-details {
-    grid-template-columns: 1fr;
+    display: none;
+  }
+
+  /* Horizontally scrollable chip rows — no wrapping on mobile */
+  .chip-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .chip-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Prevent iOS Safari from zooming in on small-font interactive elements */
+  .chip,
+  .search-input {
+    font-size: 1rem;
+  }
+
+  /* Ensure chip buttons meet minimum 44px tap-target height on mobile */
+  .chip {
+    padding: 12px 14px;
+  }
+
+  /* Side-by-side card layout: info on left, action button on right */
+  .roster-card {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  /* Right-side action column stretches to full card height */
+  .card-actions {
+    align-self: stretch;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+
+  /* Large, thumb-friendly check-in button */
+  .checkin-button {
+    width: auto;
+    min-width: 90px;
+    min-height: 60px;
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+
+  /* Status pill is redundant on mobile — button color/text already signals state */
+  .status-pill {
+    display: none;
   }
 }

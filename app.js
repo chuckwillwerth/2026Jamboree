@@ -159,7 +159,9 @@ async function setupAttendanceSync() {
   await authModules.signInAnonymously(auth);
 
   const attendanceCollection = firestoreModules.collection(db, "events", state.eventId, "attendance");
-  state.attendanceService = {
+  const syncStoppedMessage =
+    "Live syncing stopped. This device is using local storage only until Firebase access is working again.";
+  const firebaseAttendanceService = {
     markPresent: async (person) => {
       await firestoreModules.setDoc(
         firestoreModules.doc(attendanceCollection, person.id),
@@ -179,6 +181,26 @@ async function setupAttendanceSync() {
       await firestoreModules.deleteDoc(firestoreModules.doc(attendanceCollection, rosterId));
     },
   };
+  state.attendanceService = {
+    markPresent: async (person) => {
+      try {
+        await firebaseAttendanceService.markPresent(person);
+      } catch (error) {
+        console.error(error);
+        const localAttendanceService = enableLocalMode(syncStoppedMessage);
+        await localAttendanceService.markPresent(person);
+      }
+    },
+    clear: async (rosterId) => {
+      try {
+        await firebaseAttendanceService.clear(rosterId);
+      } catch (error) {
+        console.error(error);
+        const localAttendanceService = enableLocalMode(syncStoppedMessage);
+        await localAttendanceService.clear(rosterId);
+      }
+    },
+  };
 
   firestoreModules.onSnapshot(attendanceCollection, (snapshot) => {
     const nextAttendance = new Map();
@@ -188,6 +210,10 @@ async function setupAttendanceSync() {
     state.attendance = nextAttendance;
     persistLocalAttendance(state.attendance);
     render();
+  }, (error) => {
+    console.error(error);
+    enableLocalMode(syncStoppedMessage);
+    render();
   });
 
   state.mode = "firebase";
@@ -195,9 +221,12 @@ async function setupAttendanceSync() {
 }
 
 function enableLocalMode(message) {
+  persistLocalAttendance(state.attendance);
+  const localAttendanceService = createLocalAttendanceService();
   state.mode = "local";
-  state.attendanceService = createLocalAttendanceService();
+  state.attendanceService = localAttendanceService;
   showBanner("local", message);
+  return localAttendanceService;
 }
 
 function createLocalAttendanceService() {

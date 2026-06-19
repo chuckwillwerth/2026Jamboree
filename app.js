@@ -45,6 +45,7 @@ async function initialize() {
   bindEvents();
   state.roster = await loadRoster();
   state.attendance = loadLocalAttendance();
+  state.attendanceService = createLocalAttendanceService();
   renderFilters();
   render();
   await setupAttendanceSync();

@@ -6,6 +6,7 @@ const state = {
   roster: [],
   attendance: new Map(),
   division: "All",
+  team: "All",
   role: "All",
   search: "",
   mode: "local",
@@ -17,6 +18,8 @@ const elements = {
   syncBanner: document.querySelector("#syncBanner"),
   searchInput: document.querySelector("#searchInput"),
   divisionFilters: document.querySelector("#divisionFilters"),
+  teamFilterGroup: document.querySelector("#teamFilterGroup"),
+  teamFilters: document.querySelector("#teamFilters"),
   roleFilters: document.querySelector("#roleFilters"),
   presentCount: document.querySelector("#presentCount"),
   remainingCount: document.querySelector("#remainingCount"),
@@ -57,6 +60,7 @@ function bindEvents() {
   elements.clearSearchButton.addEventListener("click", () => {
     state.search = "";
     state.division = "All";
+    state.team = "All";
     state.role = "All";
     elements.searchInput.value = "";
     renderFilters();
@@ -221,9 +225,25 @@ function createLocalAttendanceService() {
 function renderFilters() {
   renderChipGroup(elements.divisionFilters, ["All", ...new Set(state.roster.map((entry) => entry.division))], state.division, (value) => {
     state.division = value;
+    state.team = "All";
     renderFilters();
     render();
   });
+
+  const divisonTeams = state.division === "All"
+    ? []
+    : [...new Set(state.roster.filter((entry) => entry.division === state.division).map((entry) => entry.team))];
+
+  if (divisonTeams.length > 1) {
+    elements.teamFilterGroup.hidden = false;
+    renderChipGroup(elements.teamFilters, ["All", ...divisonTeams], state.team, (value) => {
+      state.team = value;
+      renderFilters();
+      render();
+    });
+  } else {
+    elements.teamFilterGroup.hidden = true;
+  }
 
   renderChipGroup(elements.roleFilters, ["All", "Player", "Coach"], state.role, (value) => {
     state.role = value;
@@ -295,6 +315,7 @@ function render() {
 function getFilteredRoster() {
   return state.roster
     .filter((entry) => state.division === "All" || entry.division === state.division)
+    .filter((entry) => state.team === "All" || entry.team === state.team)
     .filter((entry) => state.role === "All" || entry.role === state.role)
     .filter((entry) => state.search === "" || entry.searchIndex.includes(state.search))
     .sort((left, right) => {

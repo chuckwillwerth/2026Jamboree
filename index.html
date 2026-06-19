@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2026 Jamboree Attendance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Gate Check-In</p>
+        <h1>2026 Jamboree Attendance</h1>
+        <p class="hero-copy">
+          Search by division, team or coach, and player name. Tap once to mark a person present.
+        </p>
+      </header>
+
+      <main class="layout">
+        <section class="panel controls-panel">
+          <div id="syncBanner" class="sync-banner" aria-live="polite"></div>
+
+          <div class="search-stack">
+            <label class="field-label" for="searchInput">Search roster</label>
+            <input
+              id="searchInput"
+              class="search-input"
+              type="search"
+              placeholder="Name, team, coach, division"
+              autocomplete="off"
+              enterkeyhint="search"
+            />
+          </div>
+
+          <div class="filters">
+            <div>
+              <p class="field-label">Division</p>
+              <div id="divisionFilters" class="chip-row"></div>
+            </div>
+
+            <div>
+              <p class="field-label">Roster type</p>
+              <div id="roleFilters" class="chip-row"></div>
+            </div>
+          </div>
+
+          <section class="stats" aria-label="Attendance summary">
+            <article class="stat-card accent-card">
+              <span class="stat-label">Checked in</span>
+              <strong id="presentCount" class="stat-value">0</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Still expected</span>
+              <strong id="remainingCount" class="stat-value">0</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Roster size</span>
+              <strong id="totalCount" class="stat-value">0</strong>
+            </article>
+          </section>
+        </section>
+
+        <section class="panel roster-panel">
+          <div class="results-header">
+            <div>
+              <p class="field-label">Results</p>
+              <p id="resultsSummary" class="results-summary">Loading roster…</p>
+            </div>
+            <button id="clearSearchButton" class="ghost-button" type="button">Clear</button>
+          </div>
+
+          <div id="rosterList" class="roster-list" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="rosterCardTemplate">
+      <article class="roster-card">
+        <div class="card-main">
+          <div class="card-head">
+            <div>
+              <h2 class="person-name"></h2>
+              <p class="person-meta"></p>
+            </div>
+            <span class="status-pill"></span>
+          </div>
+          <dl class="person-details">
+            <div>
+              <dt>Division</dt>
+              <dd class="detail-division"></dd>
+            </div>
+            <div>
+              <dt>Team / Coach</dt>
+              <dd class="detail-team"></dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd class="detail-role"></dd>
+            </div>
+            <div>
+              <dt>Shirt size</dt>
+              <dd class="detail-shirt"></dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card-actions">
+          <button class="checkin-button" type="button"></button>
+        </div>
+      </article>
+    </template>
+
+    <script src="./firebase-config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

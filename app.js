@@ -230,13 +230,13 @@ function renderFilters() {
     render();
   });
 
-  const divisonTeams = state.division === "All"
+  const divisionTeams = state.division === "All"
     ? []
     : [...new Set(state.roster.filter((entry) => entry.division === state.division).map((entry) => entry.team))];
 
-  if (divisonTeams.length > 1) {
+  if (divisionTeams.length > 1) {
     elements.teamFilterGroup.hidden = false;
-    renderChipGroup(elements.teamFilters, ["All", ...divisonTeams], state.team, (value) => {
+    renderChipGroup(elements.teamFilters, ["All", ...divisionTeams], state.team, (value) => {
       state.team = value;
       renderFilters();
       render();

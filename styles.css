@@ -387,6 +387,11 @@ button {
     padding-inline: 2px;
   }
 
+  .controls-panel {
+    position: static;
+    top: auto;
+  }
+
   .controls-panel,
   .roster-panel {
     padding: 14px;

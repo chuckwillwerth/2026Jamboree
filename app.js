@@ -162,6 +162,7 @@ async function setupAttendanceSync() {
   const syncStoppedMessage =
     "Live syncing stopped. This device is using local storage only until Firebase access is working again.";
   const firebaseAttendanceService = {
+    storageMode: "firebase",
     markPresent: async (person) => {
       await firestoreModules.setDoc(
         firestoreModules.doc(attendanceCollection, person.id),
@@ -187,8 +188,8 @@ async function setupAttendanceSync() {
         await firebaseAttendanceService.markPresent(person);
       } catch (error) {
         console.error("Failed to mark attendance in Firebase, falling back to local storage.", error);
-        enableLocalMode(syncStoppedMessage);
-        await state.attendanceService.markPresent(person);
+        const localAttendanceService = enableLocalMode(syncStoppedMessage);
+        await localAttendanceService.markPresent(person);
       }
     },
     clear: async (rosterId) => {
@@ -196,8 +197,8 @@ async function setupAttendanceSync() {
         await firebaseAttendanceService.clear(rosterId);
       } catch (error) {
         console.error("Failed to clear attendance in Firebase, falling back to local storage.", error);
-        enableLocalMode(syncStoppedMessage);
-        await state.attendanceService.clear(rosterId);
+        const localAttendanceService = enableLocalMode(syncStoppedMessage);
+        await localAttendanceService.clear(rosterId);
       }
     },
   };
@@ -221,16 +222,18 @@ async function setupAttendanceSync() {
 }
 
 function enableLocalMode(message) {
-  if (state.mode !== "local") {
+  if (state.attendanceService?.storageMode !== "local") {
     persistLocalAttendance(state.attendance);
     state.attendanceService = createLocalAttendanceService();
   }
   state.mode = "local";
   showBanner("local", message);
+  return state.attendanceService;
 }
 
 function createLocalAttendanceService() {
   return {
+    storageMode: "local",
     markPresent: async (person) => {
       state.attendance.set(person.id, {
         rosterId: person.id,

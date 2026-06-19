@@ -186,18 +186,18 @@ async function setupAttendanceSync() {
       try {
         await firebaseAttendanceService.markPresent(person);
       } catch (error) {
-        console.error(error);
-        const localAttendanceService = getLocalAttendanceService(syncStoppedMessage);
-        await localAttendanceService.markPresent(person);
+        console.error("Failed to mark attendance in Firebase, falling back to local storage.", error);
+        enableLocalMode(syncStoppedMessage);
+        await state.attendanceService.markPresent(person);
       }
     },
     clear: async (rosterId) => {
       try {
         await firebaseAttendanceService.clear(rosterId);
       } catch (error) {
-        console.error(error);
-        const localAttendanceService = getLocalAttendanceService(syncStoppedMessage);
-        await localAttendanceService.clear(rosterId);
+        console.error("Failed to clear attendance in Firebase, falling back to local storage.", error);
+        enableLocalMode(syncStoppedMessage);
+        await state.attendanceService.clear(rosterId);
       }
     },
   };
@@ -227,11 +227,6 @@ function enableLocalMode(message) {
   }
   state.mode = "local";
   showBanner("local", message);
-}
-
-function getLocalAttendanceService(message) {
-  enableLocalMode(message);
-  return state.attendanceService;
 }
 
 function createLocalAttendanceService() {

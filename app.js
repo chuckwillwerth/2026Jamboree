@@ -81,6 +81,7 @@ function bindEvents() {
         const person = state.roster.find((entry) => entry.id === rosterId);
         await state.attendanceService.markPresent(person);
       }
+      navigator.vibrate?.(30);
     } catch (error) {
       console.error(error);
       window.alert("Attendance could not be updated. Please try again.");

@@ -183,7 +183,6 @@ async function setupAttendanceSync() {
     },
   };
   state.attendanceService = {
-    storageMode: "firebase",
     markPresent: async (person) => {
       try {
         await firebaseAttendanceService.markPresent(person);

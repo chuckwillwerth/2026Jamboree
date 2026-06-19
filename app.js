@@ -187,7 +187,7 @@ async function setupAttendanceSync() {
         await firebaseAttendanceService.markPresent(person);
       } catch (error) {
         console.error(error);
-        const localAttendanceService = enableLocalMode(syncStoppedMessage);
+        const localAttendanceService = getLocalAttendanceService(syncStoppedMessage);
         await localAttendanceService.markPresent(person);
       }
     },
@@ -196,7 +196,7 @@ async function setupAttendanceSync() {
         await firebaseAttendanceService.clear(rosterId);
       } catch (error) {
         console.error(error);
-        const localAttendanceService = enableLocalMode(syncStoppedMessage);
+        const localAttendanceService = getLocalAttendanceService(syncStoppedMessage);
         await localAttendanceService.clear(rosterId);
       }
     },
@@ -221,12 +221,17 @@ async function setupAttendanceSync() {
 }
 
 function enableLocalMode(message) {
-  persistLocalAttendance(state.attendance);
-  const localAttendanceService = createLocalAttendanceService();
+  if (state.mode !== "local") {
+    persistLocalAttendance(state.attendance);
+    state.attendanceService = createLocalAttendanceService();
+  }
   state.mode = "local";
-  state.attendanceService = localAttendanceService;
   showBanner("local", message);
-  return localAttendanceService;
+}
+
+function getLocalAttendanceService(message) {
+  enableLocalMode(message);
+  return state.attendanceService;
 }
 
 function createLocalAttendanceService() {

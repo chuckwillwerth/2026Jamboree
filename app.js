@@ -183,13 +183,13 @@ async function setupAttendanceSync() {
     },
   };
   state.attendanceService = {
+    storageMode: "firebase",
     markPresent: async (person) => {
       try {
         await firebaseAttendanceService.markPresent(person);
       } catch (error) {
         console.error("Failed to mark attendance in Firebase, falling back to local storage.", error);
-        const localAttendanceService = enableLocalMode(syncStoppedMessage);
-        await localAttendanceService.markPresent(person);
+        await runInLocalMode(syncStoppedMessage, (localAttendanceService) => localAttendanceService.markPresent(person));
       }
     },
     clear: async (rosterId) => {
@@ -197,8 +197,7 @@ async function setupAttendanceSync() {
         await firebaseAttendanceService.clear(rosterId);
       } catch (error) {
         console.error("Failed to clear attendance in Firebase, falling back to local storage.", error);
-        const localAttendanceService = enableLocalMode(syncStoppedMessage);
-        await localAttendanceService.clear(rosterId);
+        await runInLocalMode(syncStoppedMessage, (localAttendanceService) => localAttendanceService.clear(rosterId));
       }
     },
   };
@@ -212,7 +211,7 @@ async function setupAttendanceSync() {
     persistLocalAttendance(state.attendance);
     render();
   }, (error) => {
-    console.error(error);
+    console.error("Firebase snapshot sync failed, switching to local mode.", error);
     enableLocalMode(syncStoppedMessage);
     render();
   });
@@ -229,6 +228,11 @@ function enableLocalMode(message) {
   state.mode = "local";
   showBanner("local", message);
   return state.attendanceService;
+}
+
+async function runInLocalMode(message, operation) {
+  const localAttendanceService = enableLocalMode(message);
+  await operation(localAttendanceService);
 }
 
 function createLocalAttendanceService() {

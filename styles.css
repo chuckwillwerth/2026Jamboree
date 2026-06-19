@@ -12,6 +12,7 @@
   --brand-soft: rgba(10, 122, 99, 0.12);
   --warning: #b65a1b;
   --warning-soft: rgba(182, 90, 27, 0.12);
+  --warning-border: rgba(182, 90, 27, 0.22);
   --shadow: 0 18px 40px rgba(75, 57, 29, 0.12);
   --radius-lg: 24px;
   --radius-md: 18px;
@@ -333,7 +334,7 @@ button {
 .roster-card[data-present="true"] .checkin-button {
   background: var(--warning-soft);
   color: var(--warning);
-  border: 1.5px solid rgba(182, 90, 27, 0.22);
+  border: 1.5px solid var(--warning-border);
 }
 
 .empty-state {

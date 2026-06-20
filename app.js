@@ -21,9 +21,6 @@ const elements = {
   teamFilterGroup: document.querySelector("#teamFilterGroup"),
   teamFilters: document.querySelector("#teamFilters"),
   roleFilters: document.querySelector("#roleFilters"),
-  presentCount: document.querySelector("#presentCount"),
-  remainingCount: document.querySelector("#remainingCount"),
-  totalCount: document.querySelector("#totalCount"),
   resultsSummary: document.querySelector("#resultsSummary"),
   clearSearchButton: document.querySelector("#clearSearchButton"),
   rosterList: document.querySelector("#rosterList"),
@@ -304,11 +301,6 @@ function renderChipGroup(container, values, selectedValue, onSelect) {
 
 function render() {
   const filteredRoster = getFilteredRoster();
-  const presentCount = state.attendance.size;
-
-  elements.presentCount.textContent = String(presentCount);
-  elements.totalCount.textContent = String(state.roster.length);
-  elements.remainingCount.textContent = String(Math.max(state.roster.length - presentCount, 0));
   elements.resultsSummary.textContent = `${filteredRoster.length} match${filteredRoster.length === 1 ? "" : "es"}`;
 
   elements.rosterList.replaceChildren();

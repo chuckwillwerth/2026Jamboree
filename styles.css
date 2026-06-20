@@ -79,6 +79,29 @@ button {
   color: var(--muted);
 }
 
+.hero-actions {
+  margin-top: 18px;
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-strong);
+  color: var(--brand-strong);
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid rgba(10, 122, 99, 0.16);
+  box-shadow: 0 10px 24px rgba(75, 57, 29, 0.08);
+}
+
+.hero-link:hover,
+.hero-link:focus-visible {
+  background: white;
+}
+
 .layout {
   display: grid;
   gap: 16px;
@@ -212,6 +235,14 @@ button {
   padding: 18px;
 }
 
+.summary-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.summary-panel {
+  padding: 18px;
+}
+
 .results-header {
   display: flex;
   justify-content: space-between;
@@ -236,6 +267,31 @@ button {
 .roster-list {
   display: grid;
   gap: 12px;
+}
+
+.summary-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.summary-card {
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+}
+
+.summary-card-head {
+  margin-bottom: 14px;
+}
+
+.summary-title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.stats-inline {
+  margin-top: 0;
 }
 
 .roster-card {
@@ -364,6 +420,10 @@ button {
     align-items: start;
   }
 
+  .summary-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .roster-card {
     grid-template-columns: minmax(0, 1fr) 170px;
     align-items: center;
@@ -392,7 +452,8 @@ button {
   }
 
   .controls-panel,
-  .roster-panel {
+  .roster-panel,
+  .summary-panel {
     padding: 14px;
   }
 

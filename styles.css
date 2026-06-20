@@ -540,7 +540,7 @@ button {
 
   /* Side-by-side card layout: info on left, action button on right */
   .roster-card {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     padding: 12px;
     gap: 10px;

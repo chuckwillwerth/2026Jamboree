@@ -1,19 +1,21 @@
 :root {
   color-scheme: light;
-  --bg: #f5efe2;
-  --bg-accent: #efe0bf;
-  --surface: rgba(255, 251, 244, 0.92);
-  --surface-strong: #fffdf8;
-  --ink: #1f1d19;
-  --muted: #6d665c;
-  --line: rgba(54, 43, 20, 0.12);
-  --brand: #0a7a63;
-  --brand-strong: #085f4d;
-  --brand-soft: rgba(10, 122, 99, 0.12);
-  --warning: #b65a1b;
-  --warning-soft: rgba(182, 90, 27, 0.12);
-  --warning-border: rgba(182, 90, 27, 0.22);
-  --shadow: 0 18px 40px rgba(75, 57, 29, 0.12);
+  --bg: #f4f0e6;
+  --bg-accent: #e8e2d6;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-strong: #ffffff;
+  --ink: #0f1a3d;
+  --muted: #6b7280;
+  --line: rgba(27, 45, 107, 0.14);
+  --brand: #1b2d6b;
+  --brand-mid: #243680;
+  --brand-strong: #0f1a3d;
+  --brand-accent: #99ccff;
+  --brand-soft: rgba(153, 204, 255, 0.2);
+  --warning: #cc2229;
+  --warning-soft: rgba(204, 34, 41, 0.12);
+  --warning-border: rgba(204, 34, 41, 0.24);
+  --shadow: 0 18px 40px rgba(15, 26, 61, 0.12);
   --radius-lg: 24px;
   --radius-md: 18px;
   --radius-sm: 999px;
@@ -30,7 +32,7 @@ body {
   color: var(--ink);
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.55), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(10, 122, 99, 0.12), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(153, 204, 255, 0.2), transparent 28%),
     linear-gradient(145deg, var(--bg), var(--bg-accent));
 }
 
@@ -52,7 +54,12 @@ button {
 }
 
 .hero {
-  padding: 20px 8px 16px;
+  padding: 24px 18px 20px;
+  background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 62%, var(--brand-mid) 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  border-bottom: 4px solid var(--brand-accent);
+  box-shadow: var(--shadow);
 }
 
 .eyebrow {
@@ -61,7 +68,7 @@ button {
   letter-spacing: 0.16em;
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--brand-strong);
+  color: var(--brand-accent);
 }
 
 .hero h1 {
@@ -76,7 +83,7 @@ button {
   max-width: 56ch;
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .hero-actions {
@@ -93,8 +100,8 @@ button {
   color: var(--brand-strong);
   text-decoration: none;
   font-weight: 700;
-  border: 1px solid rgba(10, 122, 99, 0.16);
-  box-shadow: 0 10px 24px rgba(75, 57, 29, 0.08);
+  border: 1px solid rgba(153, 204, 255, 0.45);
+  box-shadow: 0 10px 24px rgba(15, 26, 61, 0.18);
 }
 
 .hero-link:hover,
@@ -167,8 +174,8 @@ button {
 
 .search-input:focus {
   outline: none;
-  border-color: rgba(10, 122, 99, 0.45);
-  box-shadow: 0 0 0 4px rgba(10, 122, 99, 0.12);
+  border-color: rgba(153, 204, 255, 0.8);
+  box-shadow: 0 0 0 4px rgba(153, 204, 255, 0.2);
 }
 
 .filters {
@@ -213,7 +220,7 @@ button {
 }
 
 .accent-card {
-  background: linear-gradient(160deg, rgba(10, 122, 99, 0.98), rgba(8, 95, 77, 0.92));
+  background: linear-gradient(160deg, var(--brand) 0%, var(--brand-strong) 100%);
   color: white;
   border-color: transparent;
 }
@@ -291,8 +298,8 @@ button {
 }
 
 .shirt-row[data-present="true"] {
-  border-color: rgba(10, 122, 99, 0.28);
-  background: linear-gradient(180deg, rgba(10, 122, 99, 0.05), rgba(255, 253, 248, 0.96));
+  border-color: rgba(153, 204, 255, 0.55);
+  background: linear-gradient(180deg, rgba(153, 204, 255, 0.18), rgba(255, 255, 255, 0.98));
 }
 
 .shirt-row-name {
@@ -314,9 +321,9 @@ button {
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   font-weight: 700;
-  background: rgba(10, 122, 99, 0.12);
+  background: var(--brand-soft);
   color: var(--brand-strong);
-  border: 1px solid rgba(10, 122, 99, 0.16);
+  border: 1px solid rgba(153, 204, 255, 0.4);
 }
 
 .summary-card {
@@ -350,8 +357,8 @@ button {
 }
 
 .roster-card[data-present="true"] {
-  border-color: rgba(10, 122, 99, 0.28);
-  background: linear-gradient(180deg, rgba(10, 122, 99, 0.05), rgba(255, 253, 248, 0.96));
+  border-color: rgba(153, 204, 255, 0.55);
+  background: linear-gradient(180deg, rgba(153, 204, 255, 0.18), rgba(255, 255, 255, 0.98));
 }
 
 .card-head {
@@ -377,7 +384,7 @@ button {
   border-radius: var(--radius-sm);
   font-size: 0.8rem;
   font-weight: 700;
-  background: #f2ece1;
+  background: var(--bg-accent);
   color: var(--muted);
 }
 
@@ -396,7 +403,7 @@ button {
 .person-details div {
   padding: 12px;
   border-radius: 14px;
-  background: rgba(245, 239, 226, 0.7);
+  background: rgba(244, 240, 230, 0.85);
 }
 
 .person-details dt {

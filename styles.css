@@ -317,8 +317,18 @@ button {
 }
 
 .shirt-row[data-present="true"] {
-  border-color: rgba(153, 204, 255, 0.55);
-  background: linear-gradient(180deg, rgba(153, 204, 255, 0.18), rgba(255, 255, 255, 0.98));
+  border-color: rgba(153, 204, 255, 0.75);
+  background: linear-gradient(180deg, rgba(153, 204, 255, 0.38), rgba(224, 240, 255, 0.72));
+}
+
+.shirt-row[data-present="false"] {
+  background: linear-gradient(180deg, var(--bg-accent), var(--bg));
+  border-color: rgba(27, 45, 107, 0.08);
+}
+
+.shirt-row[data-present="true"] .shirt-row-meta {
+  color: var(--brand-mid);
+  font-weight: 500;
 }
 
 .shirt-row-name {

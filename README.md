@@ -10,14 +10,17 @@ Phone-friendly attendance tracker for jamboree check-in.
 - Syncs attendance across multiple phones with Firebase Firestore
 - Falls back to browser-local storage until Firebase is configured
 - Includes a separate division summary page for per-division totals
+- Includes a shirt handout page that lists team players with shirt sizes
 
 ## Files
 
 - `index.html` - app shell
 - `divisions.html` - division-level attendance summary
+- `shirts.html` - shirt handout page by division and team
 - `styles.css` - mobile-first styling
 - `app.js` - roster loading, filtering, and attendance logic
 - `division-summary.js` - division summary loading and attendance totals
+- `shirts-handouts.js` - shirt handout filtering and attendance-aware ordering
 - `firebase-config.js` - local app configuration
 
 ## Run locally

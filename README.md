@@ -9,12 +9,15 @@ Phone-friendly attendance tracker for jamboree check-in.
 - Marks someone present with a single tap
 - Syncs attendance across multiple phones with Firebase Firestore
 - Falls back to browser-local storage until Firebase is configured
+- Includes a separate division summary page for per-division totals
 
 ## Files
 
 - `index.html` - app shell
+- `divisions.html` - division-level attendance summary
 - `styles.css` - mobile-first styling
 - `app.js` - roster loading, filtering, and attendance logic
+- `division-summary.js` - division summary loading and attendance totals
 - `firebase-config.js` - local app configuration
 
 ## Run locally

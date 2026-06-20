@@ -213,7 +213,6 @@ async function setupAttendanceSync() {
   });
 
   state.mode = "firebase";
-  showBanner("firebase", "Live sync is on. Check-ins on one phone will appear on the others.");
 }
 
 function enableLocalMode(message) {

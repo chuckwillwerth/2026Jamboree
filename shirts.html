@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2026 Jamboree Shirt Handouts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Shirt Handouts</p>
+        <h1>Team Shirt Sizes</h1>
+        <p class="hero-copy">
+          Pick a division, then a team, to see players. Players who are already present are listed first.
+        </p>
+        <div class="hero-actions">
+          <a class="hero-link" href="./index.html">Back to check-in</a>
+          <a class="hero-link" href="./divisions.html">View division summary</a>
+        </div>
+      </header>
+
+      <main class="layout summary-layout">
+        <section class="panel summary-panel">
+          <div id="syncBanner" class="sync-banner" aria-live="polite"></div>
+
+          <div class="filters">
+            <div>
+              <p class="field-label">Division</p>
+              <div id="divisionFilters" class="chip-row" aria-label="Division options"></div>
+            </div>
+
+            <div>
+              <p class="field-label">Team</p>
+              <div id="teamFilters" class="chip-row" aria-label="Team options"></div>
+            </div>
+          </div>
+
+          <div class="results-header">
+            <div>
+              <p class="field-label">Players</p>
+              <p id="resultsSummary" class="results-summary">Loading roster…</p>
+            </div>
+          </div>
+
+          <section id="shirtList" class="shirt-list" aria-live="polite"></section>
+        </section>
+      </main>
+    </div>
+
+    <template id="shirtListTemplate">
+      <article class="shirt-row">
+        <div>
+          <h2 class="shirt-row-name"></h2>
+          <p class="shirt-row-meta"></p>
+        </div>
+        <span class="shirt-size-pill"></span>
+      </article>
+    </template>
+
+    <script src="./firebase-config.js"></script>
+    <script type="module" src="./shirts-handouts.js"></script>
+  </body>
+</html>

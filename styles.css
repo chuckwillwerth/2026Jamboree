@@ -377,6 +377,10 @@ button {
   margin-top: 0;
 }
 
+.role-section {
+  margin-top: 16px;
+}
+
 .roster-card {
   display: grid;
   gap: 14px;

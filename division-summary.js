@@ -60,6 +60,7 @@ async function loadRoster() {
       return {
         id: createRosterId(index, division, team, first, last, role),
         division,
+        role,
       };
     })
     .sort((left, right) => left.division.localeCompare(right.division, undefined, { numeric: true }));
@@ -120,9 +121,12 @@ function render() {
   divisionSummaries.forEach((summary) => {
     const card = elements.divisionSummaryTemplate.content.firstElementChild.cloneNode(true);
     card.querySelector(".summary-title").textContent = summary.division;
-    card.querySelector(".division-present-count").textContent = String(summary.presentCount);
-    card.querySelector(".division-remaining-count").textContent = String(summary.remainingCount);
-    card.querySelector(".division-total-count").textContent = String(summary.totalCount);
+    card.querySelector(".division-player-present-count").textContent = String(summary.playerPresentCount);
+    card.querySelector(".division-player-remaining-count").textContent = String(summary.playerRemainingCount);
+    card.querySelector(".division-player-total-count").textContent = String(summary.playerTotalCount);
+    card.querySelector(".division-coach-present-count").textContent = String(summary.coachPresentCount);
+    card.querySelector(".division-coach-remaining-count").textContent = String(summary.coachRemainingCount);
+    card.querySelector(".division-coach-total-count").textContent = String(summary.coachTotalCount);
     elements.divisionSummary.appendChild(card);
   });
 }
@@ -136,19 +140,40 @@ function summarizeByDivision() {
         division: entry.division,
         totalCount: 0,
         presentCount: 0,
+        playerTotalCount: 0,
+        playerPresentCount: 0,
+        coachTotalCount: 0,
+        coachPresentCount: 0,
       });
     }
 
     const summary = summaries.get(entry.division);
+    const isPresent = state.attendance.has(entry.id);
+    const isCoach = entry.role?.toLowerCase() === "coach";
+
     summary.totalCount += 1;
-    if (state.attendance.has(entry.id)) {
+    if (isPresent) {
       summary.presentCount += 1;
+    }
+
+    if (isCoach) {
+      summary.coachTotalCount += 1;
+      if (isPresent) {
+        summary.coachPresentCount += 1;
+      }
+    } else {
+      summary.playerTotalCount += 1;
+      if (isPresent) {
+        summary.playerPresentCount += 1;
+      }
     }
   });
 
   return Array.from(summaries.values()).map((summary) => ({
     ...summary,
     remainingCount: Math.max(summary.totalCount - summary.presentCount, 0),
+    playerRemainingCount: Math.max(summary.playerTotalCount - summary.playerPresentCount, 0),
+    coachRemainingCount: Math.max(summary.coachTotalCount - summary.coachPresentCount, 0),
   }));
 }
 

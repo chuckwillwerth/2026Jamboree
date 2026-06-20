@@ -149,7 +149,7 @@ function summarizeByDivision() {
 
     const summary = summaries.get(entry.division);
     const isPresent = state.attendance.has(entry.id);
-    const isCoach = entry.role.toLowerCase() === "coach";
+    const isCoach = entry.role?.toLowerCase() === "coach";
 
     summary.totalCount += 1;
     if (isPresent) {
